@@ -594,7 +594,7 @@
 
             //int[] copy = new int[5];
             //for (int index = 0; index < 5; index++)
-            //   copy[index] = original[index];
+            //    copy[index] = original[index];
             //for (int index = 0; index < 5; index++)
             //    Console.WriteLine($"{original[index]} and {copy[index]}");
 
@@ -626,8 +626,8 @@
 
             ////exp 22, multi-dimensional arrays
 
-            //int[,] matrix = new int[3, 2] { { 1, 2 }, { 3, 4 },{ 5, 6 } };
-            //Console.WriteLine(matrix[2,0]); //get 5
+            //int[,] matrix = new int[3, 2] { { 1, 2 }, { 3, 4 }, { 5, 6 } };
+            //Console.WriteLine(matrix[2, 0]); //get 5
 
 
             ////exp 22.5, jagged arrays. (when you need different number of components in each index)
@@ -645,11 +645,11 @@
             //for (int item = 0; item < 5; item++)
             //    original[item] = Convert.ToInt32(Console.ReadLine());
             //int[] copy = new int[5];
-            //for (int index = 0; index < 5; index++)                                       // it's one 'for' loop less
-            //{                                                                             // than the original solution!
+            //for (int index = 0; index < 5; index++)                           // it's one 'for' loop less
+            //{                                                                // than the original solution!
             //    copy[index] = original[index];
-            //    Console.WriteLine($"{original[index]} and {copy[index]}");            
-            //}                                                                         
+            //    Console.WriteLine($"{original[index]} and {copy[index]}");
+            //}
 
 
 
@@ -663,15 +663,54 @@
             //        Console.WriteLine(current);
             //}
 
-            // exp 23.1
-            string text = Console.ReadLine();
+            //// exp 23.1, DON'T DO THIS
+            //string text = Console.ReadLine();           //don't declare a variable that's used in method
+            //                                            //outside the method
 
-            void ReadText()                                       //you can use    'static void MethodName' to be safe
+            //void ReadText()                   //you can use 'static void MethodName' to be safe
+            //{
+            //    Console.WriteLine(text);      //DON'T DO THIS, it's better not to make a method inside other method
+            //}
+
+            //ReadText();
+
+
+
+            ////exp 24 more methods 
+            //static void CountBetween(int start, int end)
+            //{
+            //    for (int current = start; current <= end; current++ )
+            //        Console.WriteLine(current);
+            //}
+            //CountBetween(10, 15);
+
+
+
+            //exp 25
+            Console.WriteLine("How hight should I count?");
+            int chosenNum = GetNumber();
+            Console.WriteLine("Where to start?");
+            Count(chosenNum);
+
+            static int GetNumber()
             {
-                Console.WriteLine(text);      //DON'T DO THIS, it's better not to make a method inside other method
+                string input = Console.ReadLine();
+                int number = Convert.ToInt32(input);
+                return number;
+            }
+            static void Count(int countToNumber)
+            {
+                for (int current = GetNumber(); current <= countToNumber; current++)
+                    Console.WriteLine(current);
             }
 
-            ReadText();
+            
+
+
+
+
         }
+        
+
     }
 }
