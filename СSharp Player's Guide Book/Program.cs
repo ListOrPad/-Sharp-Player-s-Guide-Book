@@ -1,7 +1,22 @@
-﻿namespace СSharp_Player_s_Guide_Book
+﻿using System;
+
+namespace СSharp_Player_s_Guide_Book
 {
     internal class Program
     {
+        /// <summary>
+        /// Input function like in Python: You enter text in paranthesis
+        /// Then a variable you assign with this method, stores any input as string
+        /// </summary>
+        static string Input(string text)
+        {
+            Console.Write(text);
+
+            string input = Console.ReadLine();
+
+            return input;
+        }
+
         static void Main(string[] args)
         {
             ////Consolas and Telim exercise.
@@ -686,31 +701,170 @@
 
 
 
-            //exp 25
-            Console.WriteLine("How hight should I count?");
-            int chosenNum = GetNumber();
-            Console.WriteLine("Where to start?");
-            Count(chosenNum);
+            ////exp 25
+            //Console.WriteLine("How hight should I count?");
+            //int chosenNum = GetNumber();
+            //Console.WriteLine("Where to start?");
+            //Count(chosenNum);
 
-            static int GetNumber()
+            //static int GetNumber()
+            //{
+            //    string input = Console.ReadLine();
+            //    int number = Convert.ToInt32(input);
+            //    return number;
+            //}
+            //static void Count(int countToNumber)
+            //{
+            //    for (int current = GetNumber(); current <= countToNumber; current++)
+            //        Console.WriteLine(current);
+            //}
+
+
+
+            ////exp 26, simple methods with expressions
+            //void SomeThing() => Console.WriteLine(2 + 1);
+            //int SomeThingInt(int value) => value * 2 + 1;           //only one line of code!!!
+
+
+
+            ////Taking a number challenge ©️©️©️
+            //// 1st method
+            //static int AskForNumber(string text)
+            //{
+            //    Console.WriteLine(text);
+            //    int response = Convert.ToInt32(Console.ReadLine());
+            //    return response;
+            //}
+
+            //// 1st method USE
+            //int result = AskForNumber("How tall are you?");
+            //Console.WriteLine("No you're lying, you're about 10 sm shorter," +
+            //$" your height should be about {result - 10} sm");
+
+            ////2nd method
+            //static int AskForNumberInRange(string text, int min, int max)
+            //{
+
+            //    while (true)
+            //    {
+            //        string inputNumber = Input(text);
+            //        int number = Convert.ToInt32(inputNumber);
+            //        if (number >= min && number <= max)
+            //            return number;
+            //        else
+            //            Console.WriteLine("Number is out of range. Try again.");
+
+            //    }
+            //}
+            //// 2nd method USE
+            //Console.WriteLine(AskForNumberInRange("Set the number between 0 and 100 ", 0, 100));
+
+
+
+            ////exp 27 making an Input python method
+            //string var = Input("your first input ");
+            //string var1 = Input("your second input ");
+
+            //int x = Convert.ToInt32(var);
+            //int y = Convert.ToInt32(var1);
+
+            //Console.WriteLine(x + y);
+
+
+
+            ////The Countdown challenge ⏬⏬⏬
+            //static void Countdown(int startNumber, int endNumber)
+            //{
+            //    if (startNumber <= endNumber)
+            //        return;
+            //    Console.WriteLine(startNumber);
+            //    Countdown(startNumber - 1, endNumber);
+            //}
+
+            //Countdown(10, 0);
+
+
+
+            //BOSS FIGHT: Hunting the Manticore 🐼🐼🐼
+            int manticoreHP = 10;
+            int cityHP = 15;
+            while(true)
             {
-                string input = Console.ReadLine();
-                int number = Convert.ToInt32(input);
-                return number;
+                Console.Write("Player 1, how far away from the city do you want to station the Manticore? (1 - 100)  ");
+                int manticoreRange = Convert.ToInt32(Console.ReadLine());
+                if (manticoreRange <= 100 && manticoreRange >= 0)
+                    break;
             }
-            static void Count(int countToNumber)
+            Console.Clear();
+
+            Console.WriteLine("Player 2, it is your turn");
+            for (int round = 1; manticoreHP > 0 && cityHP > 0; round++)
             {
-                for (int current = GetNumber(); current <= countToNumber; current++)
-                    Console.WriteLine(current);
+                Console.WriteLine("----------------------------------------------------");
+                Console.WriteLine($"STATUS:  Round: {round}  City: {cityHP}  Manticore: {manticoreHP}");
+
+
+                int canonDamage;
+                string damageType;
+                if (round % 3 == 0 && round % 5 == 0)
+                {
+                    canonDamage = 10;
+                    damageType = "COMBO";
+                }
+                else if (round % 3 == 0)
+                {
+                    canonDamage = 3;
+                    damageType = "Fire";
+                }
+                else if (round % 5 == 0)
+                {
+                    canonDamage = 3;
+                    damageType = "Electric";
+                }
+                else
+                {
+                    canonDamage = 1;
+                    damageType = "Normal";
+                }
+                Console.Write($"The canon is expected to deal {canonDamage} ");
+                ElementColor(damageType);
+                Console.Write($"{damageType} ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("damage this round");
+                void ElementColor(string damageType)
+                {
+                    if (damageType == "Normal")
+                        Console.ForegroundColor = ConsoleColor.White;
+                    if (damageType == "COMBO")
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                    if (damageType == "Fire")
+                        Console.ForegroundColor = ConsoleColor.Red;
+                    if (damageType == "Electric")
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                }
+
+                if (manticoreHP > 0)
+                    cityHP--;
+
+
+                if (cityHP <= 0)
+                {
+                    Console.WriteLine("YOU'VE LOST");
+                    Console.WriteLine("City of Consolas has fallen.");
+                    Console.WriteLine("Try again? \n(press something)");
+                    Console.ReadKey(true);
+                }
+                else if (manticoreHP <= 0)
+                {
+                    Console.WriteLine("VICTORY!");
+                    Console.WriteLine("Manticore was destroyed!");
+                    Console.WriteLine("The city of Consolas has been saved!");
+
+
+                    //function for console color switch
+                    //if damageType = Fire => Console.ForegroundColor = ConsoleColor.Red
+                }
             }
-
-            
-
-
-
-
         }
-        
-
     }
 }
