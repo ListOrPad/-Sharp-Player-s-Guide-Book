@@ -786,24 +786,30 @@ namespace СSharp_Player_s_Guide_Book
 
 
             //BOSS FIGHT: Hunting the Manticore 🐼🐼🐼
+
+            //initializing start stats
             int manticoreHP = 10;
             int cityHP = 15;
+
+            // Player 1 setting the Manticore position
+            int manticoreRange;
             while(true)
             {
                 Console.Write("Player 1, how far away from the city do you want to station the Manticore? (1 - 100)  ");
-                int manticoreRange = Convert.ToInt32(Console.ReadLine());
+                manticoreRange = Convert.ToInt32(Console.ReadLine());
                 if (manticoreRange <= 100 && manticoreRange >= 0)
                     break;
             }
             Console.Clear();
 
+            //Player 2 turn, setting round loop and displaying status of the battle
             Console.WriteLine("Player 2, it is your turn");
             for (int round = 1; manticoreHP > 0 && cityHP > 0; round++)
             {
                 Console.WriteLine("----------------------------------------------------");
                 Console.WriteLine($"STATUS:  Round: {round}  City: {cityHP}  Manticore: {manticoreHP}");
 
-
+                //Canon attack damage and its type
                 int canonDamage;
                 string damageType;
                 if (round % 3 == 0 && round % 5 == 0)
@@ -826,11 +832,15 @@ namespace СSharp_Player_s_Guide_Book
                     canonDamage = 1;
                     damageType = "Normal";
                 }
+
+                //The canon is expected to deal {3} {fire} damage message
                 Console.Write($"The canon is expected to deal {canonDamage} ");
                 ElementColor(damageType);
                 Console.Write($"{damageType} ");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("damage this round");
+
+                //changing color of damage type word
                 void ElementColor(string damageType)
                 {
                     if (damageType == "Normal")
@@ -843,10 +853,32 @@ namespace СSharp_Player_s_Guide_Book
                         Console.ForegroundColor = ConsoleColor.Blue;
                 }
 
+                int shot;
+                do
+                {
+                    shot = Convert.ToInt32(Input("Enter desired canon range  "));
+                    if (shot == manticoreRange)
+                    {
+                        manticoreHP -= canonDamage;
+                        Console.WriteLine("This round was a DIRECT HIT!");
+                    }
+                    else if (shot > manticoreRange)
+                    {
+                        Console.WriteLine("That round OVERSHOT the target");
+                    }
+                    else if (shot < manticoreRange)
+                    {
+                        Console.WriteLine("That round FELL SHORT of the target");
+                    }
+
+                }
+                while (shot > 100 && shot < 0);
+
+                //While manticore is alive city suffers 1 HP loss every turn
                 if (manticoreHP > 0)
                     cityHP--;
 
-
+                //conditions of winning or loosing and final message
                 if (cityHP <= 0)
                 {
                     Console.WriteLine("YOU'VE LOST");
@@ -860,9 +892,6 @@ namespace СSharp_Player_s_Guide_Book
                     Console.WriteLine("Manticore was destroyed!");
                     Console.WriteLine("The city of Consolas has been saved!");
 
-
-                    //function for console color switch
-                    //if damageType = Fire => Console.ForegroundColor = ConsoleColor.Red
                 }
             }
         }
